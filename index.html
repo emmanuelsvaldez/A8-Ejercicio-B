@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Actividad 8 - Panel Google Charts</title>
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #1f4e79;
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+
+        header p {
+            margin: 5px;
+        }
+
+        .contenedor {
+            width: 95%;
+            margin: auto;
+            padding: 20px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+        }
+
+        .card-grande {
+            grid-column: span 2;
+        }
+
+        .chart {
+            width: 100%;
+            height: 420px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 15px;
+            color: #555;
+            font-size: 14px;
+        }
+    </style>
+
+    <script type="text/javascript">
+        google.charts.load('current', {
+            packages: ['corechart', 'bar']
+        });
+
+        google.charts.setOnLoadCallback(drawCharts);
+
+        function drawCharts() {
+            drawLineChart();
+            drawColumnChart();
+            drawPieChart();
+            drawBarChart();
+            drawAreaChart();
+        }
+
+        function drawLineChart() {
+            var data = google.visualization.arrayToDataTable([
+                ['Año', 'Porcentaje de pobreza'],
+                ['2008', 44.4],
+                ['2010', 46.1],
+                ['2012', 45.5],
+                ['2014', 46.2],
+                ['2016', 43.6],
+                ['2018', 41.9]
+            ]);
+
+            var options = {
+                title: 'Evolución del porcentaje de pobreza en México 2008-2018',
+                curveType: 'function',
+                legend: { position: 'bottom' },
+                hAxis: { title: 'Año' },
+                vAxis: { title: 'Porcentaje (%)' }
+            };
+
+            var chart = new google.visualization.LineChart(document.getElementById('grafico_linea'));
+            chart.draw(data, options);
+        }
+
+        function drawColumnChart() {
+            var data = google.visualization.arrayToDataTable([
+                ['Año', 'Pobreza extrema en millones'],
+                ['2008', 12.3],
+                ['2010', 13.0],
+                ['2012', 11.5],
+                ['2014', 11.4],
+                ['2016', 9.4],
+                ['2018', 9.3]
+            ]);
+
+            var options = {
+                title: 'Población en pobreza extrema en México',
+                legend: { position: 'none' },
+                hAxis: { title: 'Año' },
+                vAxis: { title: 'Millones de personas' }
+            };
+
+            var chart = new google.visualization.ColumnChart(document.getElementById('grafico_columnas'));
+            chart.draw(data, options);
+        }
+
+        function drawPieChart() {
+            var data = google.visualization.arrayToDataTable([
+                ['Condición', 'Millones de personas'],
+                ['Pobreza moderada', 43.1],
+                ['Pobreza extrema', 9.3],
+                ['Vulnerable por carencias sociales', 36.7],
+                ['Vulnerable por ingresos', 8.6],
+                ['No pobre y no vulnerable', 26.5]
+            ]);
+
+            var options = {
+                title: 'Distribución de la población por condición social en 2018',
+                pieHole: 0.35
+            };
+
+            var chart = new google.visualization.PieChart(document.getElementById('grafico_pastel'));
+            chart.draw(data, options);
+        }
+
+        function drawBarChart() {
+            var data = google.visualization.arrayToDataTable([
+                ['Carencia social', 'Porcentaje de población'],
+                ['Seguridad social', 57.3],
+                ['Alimentación', 20.4],
+                ['Servicios de salud', 16.2],
+                ['Rezago educativo', 16.9],
+                ['Servicios básicos vivienda', 19.8],
+                ['Calidad y espacios vivienda', 11.1]
+            ]);
+
+            var options = {
+                title: 'Principales carencias sociales en México 2018',
+                legend: { position: 'none' },
+                hAxis: { title: 'Porcentaje (%)' },
+                vAxis: { title: 'Carencia social' }
+            };
+
+            var chart = new google.visualization.BarChart(document.getElementById('grafico_barras'));
+            chart.draw(data, options);
+        }
+
+        function drawAreaChart() {
+            var data = google.visualization.arrayToDataTable([
+                ['Año', 'Población en pobreza'],
+                ['2008', 49.5],
+                ['2010', 52.8],
+                ['2012', 53.3],
+                ['2014', 55.3],
+                ['2016', 53.4],
+                ['2018', 52.4]
+            ]);
+
+            var options = {
+                title: 'Evolución de la población en pobreza en México',
+                legend: { position: 'bottom' },
+                hAxis: { title: 'Año' },
+                vAxis: { title: 'Millones de personas' }
+            };
+
+            var chart = new google.visualization.AreaChart(document.getElementById('grafico_area'));
+            chart.draw(data, options);
+        }
+
+        window.addEventListener('resize', drawCharts);
+    </script>
+</head>
+
+<body>
+
+    <header>
+        <h1>Actividad 8. Ejercicio B</h1>
+        <p>Panel de gráficos con Google Charts</p>
+        <p>Fuente de datos: CONEVAL, medición de pobreza en México 2008-2018</p>
+    </header>
+
+    <div class="contenedor">
+        <div class="grid">
+
+            <div class="card">
+                <div id="grafico_linea" class="chart"></div>
+            </div>
+
+            <div class="card">
+                <div id="grafico_columnas" class="chart"></div>
+            </div>
+
+            <div class="card">
+                <div id="grafico_pastel" class="chart"></div>
+            </div>
+
+            <div class="card">
+                <div id="grafico_barras" class="chart"></div>
+            </div>
+
+            <div class="card card-grande">
+                <div id="grafico_area" class="chart"></div>
+            </div>
+
+        </div>
+    </div>
+
+    <footer>
+        Elaborado para la materia Visualización Gráfica de Datos Emmanuel Sanchez Valdez.
+    </footer>
+
+</body>
+</html>
